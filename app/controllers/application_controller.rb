@@ -18,13 +18,13 @@ class ApplicationController < ActionController::Base
   #   - index.json.props
   # ```
   #
-  # before_action :use_jsx_rendering_defaults
+  before_action :use_jsx_rendering_defaults
   #
   #
   # The html template used when `use_jsx_rendering_defaults` is enabled.
   # Defaults to "application/superglue".
   #
-  # superglue_template "application/superglue"
+  superglue_template "application/superglue"
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern

@@ -7,3 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+# db/seeds.rb
+Item.create!([
+  { name: "Milk", completed: false },
+  { name: "Bread", completed: true },
+  { name: "Eggs", completed: false },
+  { name: "Apples", completed: false },
+  { name: "Cheese", completed: true }
+])
