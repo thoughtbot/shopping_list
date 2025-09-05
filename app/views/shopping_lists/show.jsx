@@ -17,11 +17,10 @@ export default function ShoppingListsShow() {
       <ul>
         {items.map(item => (
           <li key={item.id}>
-            <input 
-              type="checkbox" 
-              checked={item.completed}
-              readOnly 
-            />
+            {item.completed ? "✅"  : "❌"}
+            <Form {...item.toggleForm.form} extras={item.toggleForm.extras}>
+              <SubmitButton {...item.toggleForm.inputs.submit} />
+            </Form>
             {item.name}
             <a href={item.detailPath}>Details</a>
           </li>

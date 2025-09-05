@@ -13,6 +13,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def update
+    @item = Item.find(params[:id])
+    @item.update!(completed: !@item.completed)
+    redirect_to root_path
+  end
+
   private
 
   def item_params
