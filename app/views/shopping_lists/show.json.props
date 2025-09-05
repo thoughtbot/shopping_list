@@ -10,3 +10,10 @@ json.items do
     json.detailPath item_path(item)
   end
 end
+
+json.newItemForm do
+  form_props(model: Item.new, url: items_path) do |f|
+    f.text_field :name, placeholder: "Add item..."
+    f.submit "Add"
+  end
+end
