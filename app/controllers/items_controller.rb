@@ -7,16 +7,26 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params.merge(completed: false))
     
     if @item.save
-      redirect_to root_path, notice: 'Item added successfully!'
+      respond_to do |format|
+        flash[:notice] = "Item added succesfully"
+        format.html { redirect_to root_path }
+        format.json { render layout: "stream" }
+      end
     else
-      redirect_to root_path, alert: 'Failed to add item'
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.json { render layout: "stream" }
+      end
     end
   end
 
   def update
     @item = Item.find(params[:id])
     @item.update!(completed: !@item.completed)
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { render layout: "stream" }
+    end
   end
 
   private
