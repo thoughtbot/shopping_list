@@ -16,7 +16,7 @@ json.items do
   end
 end
 
-json.totalCost do
+json.totalCost(defer: [:auto, placeholder: { amount: "Calculating...", message: "Getting current prices" }]) do
   # Simulate expensive API call to get current prices
   sleep 3
   json.amount "$23.45"
