@@ -1,0 +1,6 @@
+broadcast_append_props(
+  model: @item, 
+  save_target: "item_#{@item.id}",
+  target: "shopping_list",
+  partial: "shopping_lists/item"
+)
