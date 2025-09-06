@@ -18,16 +18,16 @@ export default function ShoppingListsShow() {
         {items.map(item => (
           <li key={item.id}>
             {item.completed ? "✅"  : "❌"}
-            <Form {...item.toggleForm.form} extras={item.toggleForm.extras}>
+            <Form {...item.toggleForm.form} extras={item.toggleForm.extras} data-sg-remote>
               <SubmitButton {...item.toggleForm.inputs.submit} />
             </Form>
             {item.name}
-            <a href={item.detailPath}>Details</a>
+            <a href={item.detailPath} data-sg-visit>Details</a>
           </li>
         ))}
       </ul>
 
-      <Form {...form} extras={extras}>
+      <Form {...form} extras={extras} data-sg-remote>
         <TextField {...inputs.name} />
         <SubmitButton {...inputs.submit} />
       </Form>
