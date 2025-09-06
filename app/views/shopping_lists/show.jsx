@@ -1,15 +1,21 @@
 import React from 'react'
-import { useContent, useStreamSource } from '@thoughtbot/superglue'
+import { useContent, useStreamSource, unproxy } from '@thoughtbot/superglue'
+import ItemsList from '@javascript/components/ItemsList'
 import { Form, TextField, SubmitButton } from '@javascript/components'
 import { useAppSelector } from '@javascript/store'
 
 export default function ShoppingListsShow() {
-  const { header, items, newItemForm, totalCost, streamFromShopping } = useContent()
+  const content = useContent()
+  const { header, newItemForm, totalCost, streamFromShopping } = content
   const { form, extras, inputs } = newItemForm
   const flash = useAppSelector((state) => state.flash)
 
   // Subscribe to real-time updates
   const { connected } = useStreamSource(streamFromShopping)
+       
+  // Get the raw content and pass fragment reference for items 
+  // to prevent parent re-renders
+  const itemsRef = unproxy(content).items
 
   return (
     <div>
@@ -25,18 +31,7 @@ export default function ShoppingListsShow() {
         </div>
       </div>
            
-      <ul>
-        {items.map(item => (
-          <li key={item.id}>
-            {item.completed ? "✅"  : "❌"}
-            <Form {...item.toggleForm.form} extras={item.toggleForm.extras} data-sg-remote>
-              <SubmitButton {...item.toggleForm.inputs.submit} />
-            </Form>
-            {item.name}
-            <a href={item.detailPath} data-sg-visit>Details</a>
-          </li>
-        ))}
-      </ul>
+      <ItemsList itemsRef={itemsRef} />
 
       <Form {...form} extras={extras} data-sg-remote>
         <TextField {...inputs.name} />
