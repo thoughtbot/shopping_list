@@ -2,6 +2,9 @@ json.header do
   json.title "Family Shopping List"
 end
 
+# Set up streaming subscription
+json.streamFromShopping stream_from_props("shopping")
+
 json.items(partial: ["item_list", fragment: "shopping_list"]) do
 end
 # 
