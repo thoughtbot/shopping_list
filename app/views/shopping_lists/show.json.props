@@ -16,6 +16,13 @@ json.items do
   end
 end
 
+json.totalCost do
+  # Simulate expensive API call to get current prices
+  sleep 3
+  json.amount "$23.45"
+  json.message "Estimated total based on current prices"
+end
+
 json.newItemForm do
   form_props(model: Item.new, url: items_path) do |f|
     f.text_field :name, placeholder: "Add item..."

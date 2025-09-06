@@ -4,7 +4,7 @@ import { Form, TextField, SubmitButton } from '@javascript/components'
 import { useAppSelector } from '@javascript/store'
 
 export default function ShoppingListsShow() {
-  const { header, items, newItemForm } = useContent()
+  const { header, items, newItemForm, totalCost } = useContent()
   const { form, extras, inputs } = newItemForm
   const flash = useAppSelector((state) => state.flash)
 
@@ -14,6 +14,11 @@ export default function ShoppingListsShow() {
       {flash.notice && <p>{flash.notice}</p>} 
       {flash.alert && <p>{flash.alert}</p>} 
 
+      <div style={{border: '1px solid #ccc', padding: '10px', margin: '10px 0'}}>
+        <h3>Total Cost: {totalCost.amount}</h3>
+        <small>{totalCost.message}</small>
+      </div>
+           
       <ul>
         {items.map(item => (
           <li key={item.id}>
