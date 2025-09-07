@@ -1,21 +1,40 @@
-import React from 'react'
-import { useContent, unproxy } from '@thoughtbot/superglue'
+import React, {useContext} from 'react'
+import { useContent, useSetFragment, unproxy, NavigationContext } from '@thoughtbot/superglue'
 import { Form, SubmitButton } from '@javascript/components'
 
 const Item = ({ itemRef }) => {
   const {
+    id,
     name,
     completed,
     detailPath,
-    toggleForm,
   } = useContent(itemRef)
+  
+  const set = useSetFragment()
+  const { remote } = useContext(NavigationContext)
+
+  const handleToggle = (currentState) => {
+    // Optimistic update - immediate UI feedback on specific item fragment
+    set(`item_${id}`, (draft) => {
+      draft.completed = !currentState
+    })
+
+    // Sync with server (this would trigger streaming to other users)
+    remote(`/items/${id}`, { method: 'PATCH' })
+      .catch(() => {
+        // Revert on error
+        set(`item_${id}`, (draft) => {
+          draft.completed = currentState
+        })
+      })
+  }
     
   return (
     <li>
         {completed ? "✅"  : "❌"}
-        <Form {...toggleForm.form} extras={toggleForm.extras} data-sg-remote>
-          <SubmitButton {...toggleForm.inputs.submit} />
-        </Form>
+        <button onClick={() => handleToggle(completed)}>
+          Toggle
+        </button>
         {name}
         <a href={detailPath} data-sg-visit>Details</a>
     </li>
